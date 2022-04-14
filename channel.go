@@ -5,11 +5,12 @@ import (
 )
 
 func main() {
-	doneCh := make(chan struct{}, 10)
+	doneCh := make(chan int, 2)
 	//close(doneCh)
-	doneCh <- struct{}{}
+	doneCh <- 1
+
 	select {
-	case <- doneCh:
+	case <-doneCh:
 		fmt.Println("1")
 	default:
 		fmt.Println("2")
