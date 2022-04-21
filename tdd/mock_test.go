@@ -5,10 +5,6 @@ import (
 	"testing"
 )
 
-func test1() {
-
-}
-
 func TestOrderDesc(t *testing.T) {
 	var inputUsers []User = []User{
 		{name: "tom", maxScore: 10},

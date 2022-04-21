@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"testing"
 )
 
 type Number interface {
@@ -18,7 +19,7 @@ func SumNumbers[K comparable, V Number](m map[K]V) V {
 	return s
 }
 
-func main() {
+func TestGenerics(t *testing.T) {
 	ints := map[string]int64{
 		"first":  34,
 		"second": 12,

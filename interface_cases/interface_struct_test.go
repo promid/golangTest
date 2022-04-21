@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"testing"
 )
 
 type I interface {
@@ -25,7 +26,7 @@ type S1 struct {
 	prop I
 }
 
-func genS1() {
+func TestInterfaceStruct(t *testing.T) {
 	s1 := S1{}
 	s := S{"s"}
 	s1.prop = s

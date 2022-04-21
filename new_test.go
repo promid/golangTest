@@ -2,9 +2,10 @@ package main
 
 import (
 	"fmt"
+	"testing"
 )
 
-func main() {
+func TestNew(t *testing.T) {
 	i := new([2]int)
 	fmt.Println(i)
 	j := [2]int{}

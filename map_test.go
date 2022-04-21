@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"testing"
 )
 
 func fill() (a_cool_map map[string]string) {
@@ -9,7 +10,8 @@ func fill() (a_cool_map map[string]string) {
 	a_cool_map["key"] = "value"
 	return
 }
-func main() {
+
+func TestMap(t *testing.T) {
 	a_cool_map := fill()
 	fmt.Println(a_cool_map)
 }

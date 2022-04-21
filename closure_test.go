@@ -2,9 +2,10 @@ package main
 
 import (
 	"fmt"
+	"testing"
 )
 
-func main() {
+func TestClosure(t *testing.T) {
 	a := closure(1)(2)
 	fmt.Println(a)
 }

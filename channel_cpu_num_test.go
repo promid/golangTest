@@ -3,9 +3,10 @@ package main
 import (
 	"fmt"
 	"runtime"
+	"testing"
 )
 
-func main() {
+func TestCPU(t *testing.T) {
 	cpuNum := runtime.NumCPU()
 	runtime.GOMAXPROCS(cpuNum)
 	c := make(chan bool, cpuNum)

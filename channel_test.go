@@ -2,9 +2,10 @@ package main
 
 import (
 	"fmt"
+	"testing"
 )
 
-func main() {
+func TestChannel(t *testing.T) {
 	doneCh := make(chan int, 2)
 	//close(doneCh)
 	doneCh <- 1
