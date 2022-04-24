@@ -22,7 +22,8 @@ func TestSlice(t *testing.T) {
 }
 
 func PingPong(s []int) {
-	s = append(s, 3) // 注意，append后，s被改变不再指向原来的地址
+	// 如果append后超限，s的地址不变，但s中存储的数组指针变了，因为数组扩容后变成了新的数组
+	s = append(s, 3)
 }
 
 func TestSlice2(t *testing.T) {
@@ -35,4 +36,47 @@ func TestSlice2(t *testing.T) {
 	fmt.Println(s) // [0]
 	PingPong(s)
 	fmt.Println(s) // [0 3]
+}
+
+func TestSliceAppendAddr(t *testing.T) {
+	s := make([]int, 5, 5)
+	arr := [5]int{1, 2, 3, 4, 5}
+	t.Logf("s addr = %p", &s)
+	t.Logf("arr addr = %p", &arr)
+	s = arr[:2]
+	t.Logf("s addr = %p", &s)                      // address does not change
+	t.Logf("arr pointer stored in s addr = %p", s) // address does not change
+	s = append(s, 3)
+	t.Logf("%v", s)
+	t.Logf("s addr = %p", &s)                      // address does not change
+	t.Logf("arr pointer stored in s addr = %p", s) // address does not change
+	s = append(s, 4)
+	t.Logf("%v", s)
+	t.Logf("s addr = %p", &s)                      // address does not change
+	t.Logf("arr pointer stored in s addr = %p", s) // address does not change
+	s = append(s, 5)
+	t.Logf("%v", s)
+	t.Logf("s addr = %p", &s)                      // address does not change
+	t.Logf("arr pointer stored in s addr = %p", s) // address does not change
+	s = append(s, 6)
+	t.Logf("%v", s)
+	t.Logf("s addr = %p", &s)                      // address does not change
+	t.Logf("arr pointer stored in s addr = %p", s) // the pointer to the array changes because a new array is created for larger capacity
+}
+
+func TestSliceCopy(t *testing.T) {
+	s1 := make([]int, 5, 5)
+	t.Log(s1)
+	t.Logf("s1 addr = %p", &s1)
+	t.Logf("arr addr = %p", s1)
+	s2 := []int{1, 2}
+	copy(s1, s2)
+	t.Log(s1)
+	t.Logf("s1 addr = %p", &s1) // address does not change
+	t.Logf("arr addr = %p", s1) // address does not change
+	s3 := []int{1, 2, 3, 4, 5, 6, 7, 8}
+	copy(s1, s3)
+	t.Log(s1)
+	t.Logf("s1 addr = %p", &s1) // address does not change
+	t.Logf("arr addr = %p", s1) // address does not change
 }
