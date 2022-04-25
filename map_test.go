@@ -26,3 +26,10 @@ func TestReplaceMapItem(t *testing.T) {
 func replaceMapItem(m map[string]string) {
 	m["a"] = "b"
 }
+
+func TestReadNilMap(t *testing.T) {
+	var m map[string]string
+	if _, ok := m["test"]; ok {
+		fmt.Println("test")
+	}
+}
