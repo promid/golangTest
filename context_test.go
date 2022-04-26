@@ -30,3 +30,22 @@ func waitForJobDoneWithTimeout(ctx context.Context, timeout time.Duration) {
 	}
 	return
 }
+
+func TestTick(t *testing.T) {
+	ctx, cancel := context.WithCancel(context.TODO())
+	go tick(ctx)
+	time.Sleep(5 * time.Second)
+	cancel()
+}
+
+func tick(ctx context.Context) {
+	ticker := time.NewTicker(time.Second)
+	for {
+		select {
+		case <-ticker.C:
+			fmt.Println("tick")
+		case <-ctx.Done():
+			return
+		}
+	}
+}
