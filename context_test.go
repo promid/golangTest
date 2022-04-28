@@ -9,10 +9,12 @@ import (
 
 func TestContext(t *testing.T) {
 	ctx := context.TODO()
-	waitForJobDoneWithTimeout(ctx, 2*time.Second)
+	if err := waitForJobDoneWithTimeout(ctx, 2*time.Second); err != nil {
+		t.Error(err)
+	}
 }
 
-func waitForJobDoneWithTimeout(ctx context.Context, timeout time.Duration) {
+func waitForJobDoneWithTimeout(ctx context.Context, timeout time.Duration) error {
 	ctx, cancel := context.WithTimeout(ctx, timeout)
 	defer cancel()
 	jobDone := make(chan struct{})
@@ -24,11 +26,10 @@ func waitForJobDoneWithTimeout(ctx context.Context, timeout time.Duration) {
 	select {
 	case <-ctx.Done():
 		fmt.Println("timeout, exit")
-		return
 	case <-jobDone:
 		fmt.Println("job done")
 	}
-	return
+	return ctx.Err()
 }
 
 func TestTick(t *testing.T) {
