@@ -1,4 +1,4 @@
-package main
+package channel_cases
 
 import (
 	"fmt"
@@ -7,7 +7,7 @@ import (
 
 func TestChannel(t *testing.T) {
 	doneCh := make(chan int, 2)
-	//close(doneCh)
+	defer close(doneCh)
 	doneCh <- 1
 
 	select {
