@@ -11,6 +11,7 @@ func main() {
 	println("Hello, world.")
 	prometheus_metrics.RecordMetrics()
 	http.HandleFunc("/ping", prometheus_metrics.Ping)
+	http.HandleFunc("/g", prometheus_metrics.G)
 	http.HandleFunc("/vec", prometheus_metrics.Vec)
 	http.Handle("/metrics", promhttp.Handler())
 	http.ListenAndServe(":2112", nil)
