@@ -25,8 +25,8 @@ func main() {
 		for {
 			select {
 			case val, ok := <-ctx.Done():
-				fmt.Println("val in goroutine:", val)
-				fmt.Println("ok in goroutine:", ok)
+				fmt.Println("val in goroutine:", val) // {}
+				fmt.Println("ok in goroutine:", ok)   // false
 				return
 			default:
 				fmt.Println("main is running")
@@ -36,15 +36,16 @@ func main() {
 	}()
 
 	go func() {
-		// if goroutine panic, main will be dead as well
-		// below line must be uncommented
-		// defer CatchPanic()
+		// catching panic is required
+		// if goroutine panics, main will be dead as well
+		defer CatchPanic()
 		panic("panic")
 	}()
 
 	val, ok := <-ctx.Done()
-	fmt.Println("val in main:", val)
-	fmt.Println("ok in main:", ok)
+	// read from a closed channel
+	fmt.Println("val in main:", val) // {}
+	fmt.Println("ok in main:", ok)   // false
 
 	time.Sleep(3 * time.Second)
 }

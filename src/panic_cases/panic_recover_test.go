@@ -13,8 +13,8 @@ func TestRecoverPanic(t *testing.T) {
 	exceptionFun()
 }
 
+// this test will panic
 func TestRecoverPanic2(t *testing.T) {
-	//  处理异常的函数
 	defer CatchPanic()
 	go exceptionFun() // panic won't be caught in another goroutine
 	ctx, cancel := context.WithCancel(context.TODO())
