@@ -15,6 +15,7 @@ func main() {
 	http.Handle("/metrics", promhttp.Handler())
 	fmt.Println("starting server...")
 	stopCh := make(chan error)
+	defer close(stopCh)
 	go func() {
 		stopCh <- http.ListenAndServe(":2112", nil)
 	}()
