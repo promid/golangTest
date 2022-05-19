@@ -1,4 +1,4 @@
-package prometheus_metrics
+package main
 
 import (
 	"fmt"
