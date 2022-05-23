@@ -2,8 +2,8 @@ package main
 
 import (
 	"bytes"
-	"html/template"
 	"os"
+	"text/template"
 )
 
 func parseFiles() {
