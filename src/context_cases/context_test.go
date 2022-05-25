@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"testing"
 	"time"
+
+	"k8s.io/apimachinery/pkg/util/wait"
 )
 
 func TestContext(t *testing.T) {
@@ -49,4 +51,13 @@ func tick(ctx context.Context) {
 			return
 		}
 	}
+}
+
+func TestUntilWithContext(t *testing.T) {
+	ctx, cancel := context.WithTimeout(context.TODO(), 30*time.Second)
+	defer cancel()
+	fmt.Println("start")
+	wait.UntilWithContext(ctx, func(ctx context.Context) {
+		fmt.Println("tick")
+	}, 5*time.Second)
 }

@@ -19,7 +19,7 @@ func TestMap(t *testing.T) {
 func TestReplaceMapItem(t *testing.T) {
 	m := map[string]string{"a": "a"}
 	t.Log(m)
-	replaceMapItem(m)
+	replaceMapItem(m) // it works
 	t.Log(m)
 }
 
