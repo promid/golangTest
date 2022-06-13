@@ -10,7 +10,7 @@ import (
 )
 
 /**
-在使用withVaule时要注意四个事项：
+在使用withValue时要注意四个事项：
 
 1 不建议使用context值传递关键参数，关键参数应该显示的声明出来，不应该隐式处理，context中最好是携带签名、trace_id这类值。
 2 因为携带value也是key、value的形式，为了避免context因多个包同时使用context而带来冲突，key建议采用内置类型。
