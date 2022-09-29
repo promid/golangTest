@@ -61,3 +61,11 @@ func TestUntilWithContext(t *testing.T) {
 		fmt.Println("tick")
 	}, 5*time.Second)
 }
+
+func TestContextPointer(t *testing.T) {
+	ctx1 := context.TODO()
+	ctx2 := context.TODO()
+	if ctx1 != ctx2 {
+		t.Fatalf("ctx1 != ctx2")
+	}
+}

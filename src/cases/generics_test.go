@@ -35,3 +35,14 @@ func TestGenerics(t *testing.T) {
 		SumNumbers(ints),
 		SumNumbers(floats))
 }
+
+func TestLess(t *testing.T) {
+	b := Less(1, 1.2)
+	if b != false {
+		t.Errorf("expect false, got %v", b)
+	}
+}
+
+func Less[K ~int | ~int32 | ~int64 | ~float32 | ~float64](a, b K) bool {
+	return a < b
+}
