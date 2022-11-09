@@ -1,8 +1,11 @@
 package cases
 
 import (
+	"fmt"
 	"testing"
 	"time"
+
+	"github.com/stretchr/testify/assert"
 )
 
 type Integer int
@@ -49,4 +52,34 @@ func TestPointerArray(t *testing.T) {
 	}
 
 	time.Sleep(time.Second)
+}
+
+type Val struct {
+	Int *int
+}
+
+func (in *Val) DeepCopy() *Val {
+	if in == nil {
+		return nil
+	}
+	out := new(Val)
+	in.DeepCopyInto(out)
+	return out
+}
+
+func (in *Val) DeepCopyInto(out *Val) {
+	fmt.Println("out", out)
+	fmt.Printf("%p\n", out)
+	*out = *in
+	out.Int = in.Int
+}
+
+func TestVal(t *testing.T) {
+	var v *Val = &Val{Int: new(int)}
+	copy := v.DeepCopy()
+	assert.Equal(t, *v.Int, *copy.Int)
+
+	v = nil
+	copy2 := v.DeepCopy()
+	assert.Nil(t, copy2)
 }

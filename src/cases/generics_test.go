@@ -3,6 +3,8 @@ package cases
 import (
 	"fmt"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 type Number interface {
@@ -37,10 +39,8 @@ func TestGenerics(t *testing.T) {
 }
 
 func TestLess(t *testing.T) {
-	b := Less(1, 1.2)
-	if b != false {
-		t.Errorf("expect false, got %v", b)
-	}
+	b := Less(1.2, 2.2)
+	assert.True(t, b)
 }
 
 func Less[K ~int | ~int32 | ~int64 | ~float32 | ~float64](a, b K) bool {
