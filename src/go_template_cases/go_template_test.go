@@ -7,6 +7,7 @@ import (
 	"text/template"
 	"time"
 
+	"github.com/stretchr/testify/assert"
 	"k8s.io/apimachinery/pkg/util/rand"
 )
 
@@ -92,4 +93,20 @@ func TestEscape(t *testing.T) {
 	buffer := &bytes.Buffer{}
 	_ = tmpl.Execute(buffer, vars)
 	println(buffer.String())
+}
+
+func TestRenderTwice(t *testing.T) {
+	str := `"sum(delta(assertion_exec_count{_namespace_=\"assertionservice\",result=\"success\",component=\"assertion-controller\", name=~\"assertion-controller.*\", graph__cluster=\"{{ \"{{.GRAPH__CLUSTER}} \"}}\"}[10m])>0) or vector(0)"`
+	vars := make(map[string]string)
+	tmpl, err := template.New("").Parse(str)
+	assert.NoError(t, err)
+	buffer := &bytes.Buffer{}
+	_ = tmpl.Execute(buffer, vars)
+	println(buffer.String())
+	tmpl2, err := template.New("").Parse(buffer.String())
+	assert.NoError(t, err)
+	buffer2 := &bytes.Buffer{}
+	vars["GRAPH__CLUSTER"] = "cluster11111"
+	_ = tmpl2.Execute(buffer2, vars)
+	println(buffer2.String())
 }
