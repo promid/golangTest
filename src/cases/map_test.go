@@ -19,6 +19,17 @@ func TestMap(t *testing.T) {
 	fmt.Println(a_cool_map)
 }
 
+func TestMapDelete(t *testing.T) {
+	m := map[string]string{
+		"a": "a",
+	}
+	// deleting non-existing key is OK
+	delete(m, "b")
+	println(m)
+	// reading non-existing key returns empty
+	println(m["abcd"])
+}
+
 func TestReplaceMapItem(t *testing.T) {
 	m := map[string]string{"a": "a"}
 	t.Log(m)
