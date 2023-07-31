@@ -7,6 +7,7 @@ import (
 	"text/template"
 	"time"
 
+	"github.com/Masterminds/sprig/v3"
 	"github.com/stretchr/testify/assert"
 	"k8s.io/apimachinery/pkg/util/rand"
 )
@@ -109,4 +110,24 @@ func TestRenderTwice(t *testing.T) {
 	vars["GRAPH__CLUSTER"] = "cluster11111"
 	_ = tmpl2.Execute(buffer2, vars)
 	println(buffer2.String())
+}
+
+func TestDefault(t *testing.T) {
+	str := `{{ .Name | default "Bei" }}`
+	p := person{
+		Name: "",
+	}
+	te, _ := template.New("1").Funcs(sprig.TxtFuncMap()).Parse(str)
+	buffer := &bytes.Buffer{}
+	_ = te.Execute(buffer, p)
+	println(buffer.String())
+}
+
+func TestDefault2(t *testing.T) {
+	str := `{{ .NotExists | default "Hi Bei" }}`
+	p := make(map[string]interface{})
+	te, _ := template.New("1").Funcs(sprig.TxtFuncMap()).Parse(str)
+	buffer := &bytes.Buffer{}
+	_ = te.Execute(buffer, p)
+	println(buffer.String())
 }
