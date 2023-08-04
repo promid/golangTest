@@ -131,3 +131,12 @@ func TestDefault2(t *testing.T) {
 	_ = te.Execute(buffer, p)
 	println(buffer.String())
 }
+
+func TestNotExists(t *testing.T) {
+	str := `{{if eq .enable_traffic_exit "enable"}}a{{else}}b{{end}}`
+	p := make(map[string]interface{})
+	te, _ := template.New("1").Funcs(sprig.TxtFuncMap()).Parse(str)
+	buffer := &bytes.Buffer{}
+	_ = te.Execute(buffer, p)
+	println(buffer.String()) // will print b, but go 1.13 will print nothing as I tried
+}
