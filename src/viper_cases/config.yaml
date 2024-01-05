@@ -1,0 +1,5 @@
+port: 8080
+hostname: "example.com"
+features:
+  feature1: true
+  feature2: false
