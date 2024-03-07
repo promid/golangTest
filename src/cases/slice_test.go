@@ -80,3 +80,26 @@ func TestSliceCopy(t *testing.T) {
 	t.Logf("s1 addr = %p", &s1) // address does not change
 	t.Logf("arr addr = %p", s1) // address does not change
 }
+
+func TestSliceAssign(t *testing.T) {
+	var a []string
+	var b []string
+	c := []string{"1"}
+	a = c
+	copy(b, c) // b没有容量, 所以拷贝不进去
+	d := make([]string, 0)
+	copy(d, c) // d没有容量, 所以拷贝不进去
+	e := make([]string, 1)
+	copy(e, c) // e有容量, 可以拷贝进去
+	t.Logf("a = %v", a)
+	t.Logf("b = %v", b)
+	t.Logf("d = %v", d)
+	t.Logf("e = %v", e)
+
+	/*
+	   slice_test.go:94: a = [1]
+	   slice_test.go:95: b = []
+	   slice_test.go:96: d = []
+	   slice_test.go:97: e = [1]
+	*/
+}
